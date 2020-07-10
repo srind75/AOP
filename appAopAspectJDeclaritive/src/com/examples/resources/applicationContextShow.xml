@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation=" 
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- beans -->
+	<bean id="showBean" class="com.examples.beans.Show">
+		<property name="name" value="Singing" />
+		<property name="time" value="7:30PM" />
+		<property name="price" value="1000" />
+	</bean>
+
+	<!-- Target -->
+	<bean id="showService"
+		class="com.examples.service.ShowServiceImpl" />
+
+	<!-- aspect -->
+	<bean id="showAspect" class="com.examples.aspects.ShowAspect" />
+
+	<aop:config>
+		<aop:aspect id="mimicryShowAspect" ref="showAspect">
+			<aop:pointcut
+				expression="execution(public String com.examples.service.ShowService.runShow(com.examples.beans.Show))"
+				id="showPointcut" />
+
+			<aop:before method="before" pointcut-ref="showPointcut" />
+			<!-- <aop:around method="around" pointcut-ref="showPointcut"/> -->
+
+			<aop:after method="after" pointcut-ref="showPointcut" />
+			<aop:after-returning method="afterReturning"
+				pointcut-ref="showPointcut" />
+			<aop:after-throwing method="afterThrowing"
+				pointcut-ref="showPointcut" />
+		</aop:aspect>
+	</aop:config>
+
+</beans>
+ 
