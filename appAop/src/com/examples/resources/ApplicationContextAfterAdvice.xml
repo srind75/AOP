@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- Beans -->
+	<bean id="stdBean" class="com.examples.after.advice.beans.Student">
+		<property name="sname" value="Srini" />
+		<property name="squal" value="BTech" />
+		<property name="semail" value="srini@gmail.com" />
+		<property name="smobile" value="1-9988776655" />
+	</bean>
+
+	<!-- Target -->
+	<bean id="target" class="com.examples.after.advice.bo.InstituteServiceImpl" />
+
+	<!-- Advice -->
+	<bean id="advice" class="com.examples.after.advice.validator.ThanqAdvice" />
+
+	<!-- Proxy -->
+	<bean id="proxy"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="target" />
+		<property name="interceptorNames">
+			<list>
+				<value>advice</value>
+			</list>
+		</property>
+	</bean>
+</beans>
